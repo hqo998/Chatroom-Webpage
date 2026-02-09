@@ -21,16 +21,16 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 # Compiler warnings for best practices
-# if(MSVC)
-#     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
-# else()
-#     target_compile_options(${PROJECT_NAME} PRIVATE
-#         -Wall
-#         -Wextra
-#         -Wpedantic
-#         -Werror
-#     )
-# endif()
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+        -Werror
+    )
+endif()
 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -41,11 +41,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 
-set(RESOURCES_PATH ${CMAKE_SOURCE_DIR}/src/resources)
-add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_PATH} $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources
-    )
+# set(RESOURCES_PATH ${CMAKE_SOURCE_DIR}/src/resources)
+# add_custom_command(
+#         TARGET ${PROJECT_NAME} POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_PATH} $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources
+#     )
 
 # add_custom_command(
 #         TARGET ${PROJECT_NAME} POST_BUILD
