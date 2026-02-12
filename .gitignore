@@ -1,61 +1,70 @@
-# --- Build directories ---
-build/
-build*/
-cmake-build*/
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-CTestTestfile.cmake
-Makefile
-CMakePresets.json
+# Build
+build
+compile_commands.json
+.cache
 
-# --- Compiled binaries ---
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.nyc_output/
+coverage/
+
+# --- C++ / CMake ---
+# Build directories (adjust if you use different names)
+build/
+bin/
+obj/
+out/
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+CMakeLists.txt.user
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+# C++ binaries/libraries
 *.o
 *.a
 *.so
-*.lo
-*.la
-*.out
-*.exe
+*.dylib
 *.dll
+*.exe
+# Compiled Commands (for LSP)
+compile_commands.json
 
-# --- Generated executables ---
-bin/
-lib/
+# --- VS Code ---
+.vscode/
+# Ignore all in .vscode, except for settings that should be shared
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# --- Logs ---
-*.log
-
-# --- OS / Editor junk ---
+# --- OS Specific ---
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
-*~
-*.tmp
-
-# --- Visual Studio Code ---
-.vscode/
-.vscode/settings.json
-.vs
-
-# --- CLion / JetBrains ---
-.idea/
-*.iml
-
-# --- Docker ---
-# Ignore local build cache or temp outputs
-docker-compose.override.yml
-.dockerignore
-
-# --- Misc ---
-*.cache
-
-# --- Image Data ---
-data/
-db.sqlite
-
-# --- Art Working Directory ---
-art/
-
-compile_commands.json
