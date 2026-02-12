@@ -1,0 +1,114 @@
+<!DOCTYPE html> <!-- needed -->
+
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>My first page</title>
+        <link href="src/style.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1>Welcome!!</h1>
+            <h5>
+                <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Creating_the_content">
+                    entry to html mozilla.org
+                </a>
+                <br>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Cheatsheet">
+                    html cheat sheet
+                </a>
+            </h5>
+        </header>
+        <p>I am a software engineering student</p>
+        <a href="https://google.com">Go to Google</a>
+
+        <hr>
+
+        <p>ul for unordered list.</p>
+        <!-- lists ul is unordered list -->
+        <ul>
+            <li>unordered list 1</li>
+            <li>unordered list 1</li>
+        </ul>
+
+        <p>ol for ordered list.</p>
+        <!-- list ol is ordered list -->
+        <ol>
+            <li>ordered list 1</li>
+            <li>ordered list 2</li>
+        </ol>
+
+        <!-- definition list-->
+        <p>definition list</p>
+        <dl>
+            <dt>A Term</dt>
+            <dd>Definition of a term</dd>
+            <dt>Another Term</dt>
+            <dd>Definition of another term</dd>
+        </dl>
+
+        <hr>
+
+        <!-- images -->
+        <img src="images/bear_image.jpg" alt="a portrait image of a brown bear">
+    
+        <!-- 4 heading levels: -->
+        <h1>h1 main title</h1>
+        <h2>h2 top level header</h2>
+        <h3>h3 subheading</h3>
+        <h4>h4 sub-subheading</h4>
+    
+        <!-- single paragraph -->
+        <p>this is a single paragraph</p>
+
+        <!-- span is for inline container -->
+        <p>hello booger boy <span style="color:blue">boy</span></p>
+
+        <p>they say:</p>
+        <blockquote>
+            what the frick frack bro
+        </blockquote>
+
+        <!-- drop down toggle-->
+        <details>
+            <summary>HTML Cheat Sheet</summary>
+            <p>Inline elements</p>
+            <p>Block elements</p>
+        </details>
+
+        <hr>
+
+        <!-- divs are generic container that can be used to group content to style -->
+        <div class="warning">
+        <img
+            src="images/bear_image.jpg"
+            alt="An intimidating leopard." />
+        <p>Beware of the bear</p>
+        </div>
+
+        <div>
+            <p>
+                Any kind of content here. Such as &lt;p&gt;, &lt;table&gt;. You name it!
+            </p>
+        </div>
+
+        <div class="shadowbox">
+            <p>Here's a very interesting note displayed in a lovely shadowed box with css.</p>
+        </div>
+
+        <div class="counter">
+            <button id="down_but">Down</button>
+            <h2 id="count">0</h2>
+            <button id="up_but">Up</button>
+        </div>
+
+        <h2 id="ticker">0</h2>
+    
+    <script type="module" src="/src/main.js"></script>
+    </body>
+</html>
+
