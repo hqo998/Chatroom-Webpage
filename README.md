@@ -1,3 +1,5 @@
+Forked from [nikelaz/cpp-webview-gui](https://github.com/nikelaz/cpp-webview-gui)
+
 # C++ WebView GUI Starter Example
 
 This repository contains the source code for the accompanying YouTube video: **coming soon**. It demonstrates a modern C++ desktop app using [webview/webview](https://github.com/webview/webview) for cross-platform GUI and [nlohmann/json](https://github.com/nlohmann/json) for JSON parsing.
