@@ -6,6 +6,8 @@
 #include <sstream>
 #include <chrono>
 
+#include <filesystem>
+
 using json = nlohmann::json;
 
 void printTickerVal(webview::webview& window)
@@ -48,6 +50,9 @@ int main() {
         });
 
         main_window.set_html(buffer.str());
+
+        auto path = std::filesystem::absolute("ui/index.html").string();
+        main_window.navigate("file://" + path);
 
         std::thread ticker(printTickerVal, std::ref(main_window));
 
