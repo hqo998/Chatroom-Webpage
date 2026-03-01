@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex items-center justify-center flex-1 w-full">
       <form>
         <Link
-          href="/login"
+          href="/chat/0"
           className="bg-cyan-600 hover:bg-cyan-500 p-5 px-10 rounded-2xl"
         >
           <span>Login</span>
