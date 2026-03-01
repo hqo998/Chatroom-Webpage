@@ -1,15 +1,67 @@
 import Link from "next/link";
+import { tryLogin } from "./lib/actions";
+import { Button } from "./ui/button";
+
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center flex-1 w-full">
-      <form>
-        <Link
-          href="/chat/0"
-          className="bg-cyan-600 hover:bg-cyan-500 p-5 px-10 rounded-2xl"
+    <div className="flex flex-col items-center justify-center flex-1 w-full">
+      <form
+          action={tryLogin}
+          className="min-w-1/3 flex flex-col gap-2 mb-50"
+      >
+        <div
+        className=""
         >
-          <span>Login</span>
-        </Link>
+          <h1
+            className="text-5xl"
+          >
+            Login</h1>
+        </div>
+        
+        {/* username */}
+        <label
+          htmlFor="username"
+        >
+          Username
+        </label>
+        <input
+          name="username"
+          placeholder="username"
+          className="p-2 bg-gray-300 border-gray-200 rounded-md text-sm outline-2 placeholder:text-gray-500 text-black "
+        />
+  
+
+        {/* password */}
+        <label
+          htmlFor="password"
+        >
+          Password
+        </label>
+        <input
+          name="password"
+          type="password"
+          placeholder="password"
+          className="p-2 bg-gray-300 border-gray-200 rounded-md text-sm outline-2 placeholder:text-gray-500 text-black"
+        />
+        
+
+        {/* login button */}
+        <div
+        className="flex items-center justify-center gap-4"
+        >
+          <Link
+            href="/register"
+            className="bg-gray-600 hover:bg-gray-500 py-5 px-6 rounded-2xl w-fit justify-center items-center"
+          >
+            <span>Register</span>
+          </Link>
+
+          <Button type="submit">
+            <span>Login</span>
+          </Button>
+        </div>
+
       </form>
     </div>
   );
