@@ -1,6 +1,6 @@
 import Link from "next/link";
 import "./globals.css";
-import { bitcount } from "./ui/fonts";
+import { bitcount } from "../ui/fonts";
 
 export default function RootLayout({
   children,

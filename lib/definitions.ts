@@ -3,4 +3,5 @@ export type User = {
   name: string;
   password: string;
   image_url: string;
+  admin: boolean;
 }

@@ -1,3 +1,11 @@
-import Home from '@/app/page'
+import { LoginForm } from "@/ui/loginForm";
+import { Suspense } from "react";
 
-export default Home;
+
+export default function Home() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
+  );
+};
