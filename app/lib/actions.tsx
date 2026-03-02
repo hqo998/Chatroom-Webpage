@@ -8,3 +8,8 @@ export async function tryLogin(formData: FormData)
 {
   console.log(formData);
 }
+
+export async function tryRegister(formData: FormData)
+{
+  console.log(formData);
+}

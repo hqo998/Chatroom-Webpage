@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { tryLogin } from "./lib/actions";
-import { Button } from "./ui/button";
+import { tryRegister } from "@/app/lib/actions";
+import { Button } from "@/app/ui/button";
 
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 w-full">
       <form
-          action={tryLogin}
+          action={tryRegister}
           className="min-w-1/3 flex flex-col gap-2 mb-50"
       >
         <div
@@ -16,7 +16,7 @@ export default function Home() {
           <h1
             className="text-5xl"
           >
-            Login</h1>
+            Register</h1>
         </div>
         
         {/* username */}
@@ -44,6 +44,19 @@ export default function Home() {
           placeholder="password"
           className="p-2 bg-gray-300 border-gray-200 rounded-md text-sm outline-2 placeholder:text-gray-500 text-black"
         />
+
+        {/* confirm password */}
+        <label
+          htmlFor="password"
+        >
+           Comfirm Password
+        </label>
+        <input
+          name="password"
+          type="password"
+          placeholder="password"
+          className="p-2 bg-gray-300 border-gray-200 rounded-md text-sm outline-2 placeholder:text-gray-500 text-black"
+        />
         
 
         {/* login button */}
@@ -51,17 +64,16 @@ export default function Home() {
         className="flex items-center justify-center gap-4 mt-4"
         >
           <Link
-            href="/register"
+            href="/login"
             className="bg-gray-600 hover:bg-gray-500 py-5 px-6 rounded-2xl w-fit justify-center items-center"
           >
-            <span>Register</span>
+            <span> Back to Login</span>
           </Link>
 
           <Button type="submit">
-            <span>Login</span>
+            <span>Register</span>
           </Button>
         </div>
-
       </form>
     </div>
   );
