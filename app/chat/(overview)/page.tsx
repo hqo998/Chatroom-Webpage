@@ -2,6 +2,7 @@ import { intern } from "@/ui/fonts";
 import { signOut } from "@/auth";
 import { Button } from "@/ui/button";
 import { PowerIcon } from "@heroicons/react/24/outline";
+import SignOutButton from "@/ui/SignOutButton";
 
 export default function Home() {
   return (
@@ -18,12 +19,7 @@ export default function Home() {
             await signOut({ redirectTo: '/' });
             }}
           >
-          <Button>
-            <div className="flex grow items-center justify-center gap-2 rounded-md text-1xl font-medium md:flex-none md:justify-start md:p-2 md:px-3">
-              <PowerIcon className="w-6" />
-              <div className="hidden md:block">Sign Out</div>
-            </div>
-          </Button>
+          <SignOutButton />
         </form>
 
 
