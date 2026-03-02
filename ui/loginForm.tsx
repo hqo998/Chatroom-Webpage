@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import { tryLogin } from "@/lib/actions";
 import { Button } from "@/ui/button";
 import { useActionState } from 'react';
 import { authenticate } from "@/lib/actions";

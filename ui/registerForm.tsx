@@ -1,13 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import { tryRegister } from "@/lib/actions";
 import { Button } from "@/ui/button";
+import { useActionState } from "react";
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 
 
 export function RegisterForm() {
+  const [errorMessage, formAction, isPending] = useActionState(
+      tryRegister,
+      undefined,
+    );
+
+    
   return (
     <div className="flex flex-col items-center justify-center flex-1 w-full">
       <form
-          action={tryRegister}
+          action={formAction}
           className="min-w-1/3 flex flex-col gap-2 mb-50"
       >
         <div
@@ -45,14 +55,12 @@ export function RegisterForm() {
           className="p-2 bg-gray-300 border-gray-200 rounded-md text-sm outline-2 placeholder:text-gray-500 text-black"
         />
 
-        {/* confirm password */}
-        <label
-          htmlFor="password"
-        >
-           Comfirm Password
+        {/* confirm passwond */}
+        <label htmlFor="confirm_password">
+           Confirm Password
         </label>
         <input
-          name="password"
+          name="confirm_password"
           type="password"
           placeholder="password"
           className="p-2 bg-gray-300 border-gray-200 rounded-md text-sm outline-2 placeholder:text-gray-500 text-black"
@@ -74,6 +82,12 @@ export function RegisterForm() {
             <span>Register</span>
           </Button>
         </div>
+        {errorMessage && (
+            <div className="flex flex-row justify-center items-center">
+              <ExclamationCircleIcon className="h-5 w-5 text-red-500" /><p className="pl-2 text-sm text-red-500">{errorMessage}</p>
+            </div>
+          )}
+
       </form>
     </div>
   );

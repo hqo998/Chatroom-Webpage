@@ -25,8 +25,18 @@ export async function authenticate(
   }
 }
 
-export async function tryRegister(formData: FormData)
-{
+export async function tryRegister(
+  prevState: string | undefined,
+  formData: FormData
+) {
   console.log(formData);
+  // return console.log(formData.get("username")?.toString());
+  if (formData.get("username")?.toString() != formData.get("confirm_username")?.toString()) {
+    return "passwords don't match!"
+  }
+
+  
+
+  return "it's raining cats and dogs"
 }
 
