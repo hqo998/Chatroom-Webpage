@@ -9,13 +9,32 @@ import { redirect } from "next/navigation";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export type LoginUser = Omit<User, 'id' | 'image_url'>;
 
+
+async function checkDBAlive(): Promise<boolean> {
+  try {
+    const result = await sql.begin(() => [
+      sql`
+        SELECT 1;
+      `,
+    ]);
+    return true;
+  } catch (error) {
+    console.error("Couldn't connect to DB", error);
+    return false;
+  }
+}
 
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
 ) {
+
+  if (!(await checkDBAlive())) {
+    console.log("Auth DB check failed.");
+    return 'Failed to contact server.';
+  }
+
   try {
     await signIn('credentials', formData);
   } catch (error) {
