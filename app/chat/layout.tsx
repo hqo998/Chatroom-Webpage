@@ -10,10 +10,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex-1 grid grid-cols-1 grid-rows-[1fr_60px]">
           <p className="text-black">friends list component goes here</p>
 
-          <div className="flex w-full h-full justify-left items-center bg-amber-500"> {/* action buttons */}
-            {/* Signout Button */}
-            <div className="h-full shrink hover:bg-amber-700">
+          <div className="flex w-full h-full justify-center items-center gap-4 bg-amber-500 antialiased"> {/* action buttons */}
+            {/* Signout Button - fixed square and centered */}
+            <div className=" flex items-center justify-center hover:bg-amber-700">
               <SignOutButton />
+            </div>
+
+            <div className="flex-1 justify-center items-center">
+              <p>Username</p>
             </div>
           </div>
         </div>
