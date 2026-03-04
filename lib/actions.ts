@@ -1,7 +1,7 @@
 'use server'
 
 import type { User } from "@/lib/definitions";
-import { signIn } from '@/auth';
+import { signIn,signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import postgres from 'postgres';
 import bcrypt from 'bcrypt';
@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export type LoginUser = Omit<User, 'id' | 'image_url'>;
-
 
 export async function authenticate(
   prevState: string | undefined,
@@ -29,6 +28,10 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+export async function logOut() {
+  await signOut({ redirectTo: '/' });
 }
 
 export async function tryRegister(

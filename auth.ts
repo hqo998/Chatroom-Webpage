@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 import postgres from 'postgres';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
- 
+
 async function getUser(username: string): Promise<User | undefined> {
   try {
     const user = await sql<User[]>`SELECT * FROM users WHERE name=${username}`;

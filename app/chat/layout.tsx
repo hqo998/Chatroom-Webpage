@@ -1,7 +1,4 @@
 import { intern } from "@/ui/fonts";
-import { signOut } from "@/auth";
-import { Button } from "@/ui/button";
-import { PowerIcon } from "@heroicons/react/24/outline";
 import SignOutButton from "@/ui/SignOutButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -9,18 +6,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
     <div className="flex-1 min-w-3/4 grid grid-cols-1 md:grid-cols-[30%_1fr] gap-4">
       {/* friend list*/}
-      <div className={`overflow-hidden hidden md:block shrink-0 rounded-3xl bg-gray-200 ${intern.className} antialiased`}>
-        <p className="text-black">friends list</p>
+      <div className={`w-full h-full overflow-hidden hidden md:flex shrink-0 rounded-3xl bg-gray-200 ${intern.className} antialiased`}>
+        <div className="flex-1 grid grid-cols-1 grid-rows-[1fr_60px]">
+          <p className="text-black">friends list component goes here</p>
 
-        {/* Signout Button */}
-        <form
-          action={async () => {
-            'use server';
-            await signOut({ redirectTo: '/' });
-            }}
-          >
-          <SignOutButton />
-        </form>
+          <div className="flex w-full h-full justify-left items-center bg-amber-500"> {/* action buttons */}
+            {/* Signout Button */}
+            <div className="h-full shrink hover:bg-amber-700">
+              <SignOutButton />
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
       {/* main chat */}
       <div className={`overflow-hidden shrink-0 rounded-3xl ${intern.className} flex flex-col`}>
