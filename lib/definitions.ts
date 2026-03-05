@@ -5,3 +5,7 @@ export type User = {
   image_url: string;
   admin: boolean;
 }
+
+export type chatTileProps = {
+  
+} 
