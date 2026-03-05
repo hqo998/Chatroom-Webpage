@@ -8,7 +8,7 @@ export default function SignOutButton() {
   return (
     
       <button
-        className="flex-1 flex items-center justify-center gap-2 rounded-md text-1xl font-medium md:flex-none md:justify-start p-4"
+        className="flex-1 flex items-center justify-center rounded-md text-1xl font-medium md:flex-none md:justify-start p-2"
         title="Sign-Out"
         onClick={logOut}
       >
