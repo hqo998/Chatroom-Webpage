@@ -10,6 +10,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-shadow-grey: #1a1b25ff;
+  --color-lavender: #eeeeffff;
+  --color-graphite: #3a3939ff;
+  --color-hot-rose: #c60f7bff;
+  --color-barbie-pink: #f90093ff;
 }
 
 @media (prefers-color-scheme: dark) {
