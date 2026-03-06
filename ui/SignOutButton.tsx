@@ -15,7 +15,7 @@ export default function SignOutButton() {
           <PowerIcon className="w-7" />
           {/* <div className="hidden md:block">Sign Out</div> */}
       </button>
-    
+
   );
 }
 

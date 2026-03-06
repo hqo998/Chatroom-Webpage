@@ -8,7 +8,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   const user = session?.user;
 
   return (
-    <div className="flex-1 min-h-0 min-w-3/4 grid grid-rows-1 md:grid-cols-[250px_1fr] gap-4">
+    <div className="flex-1 min-h-0 min-w-0 w-full max-w-250 grid grid-rows-1 md:grid-cols-[250px_1fr] gap-4">
       
       {/* friend list */}
       <div className={`hidden md:flex md:flex-col overflow-hidden min-h-0 shrink-0 rounded-2xl bg-graphite ${intern.className} antialiased drop-shadow-black drop-shadow-lg`}>
