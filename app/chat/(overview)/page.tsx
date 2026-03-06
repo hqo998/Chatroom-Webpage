@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
     <div className="flex-1 flex items-center justify-center bg-graphite">
-      <div className="flex flex-col items-center justify-center w-1/2 h-1/3 text-lavender">
+      <div className="flex flex-col items-center justify-center mx-auto text-lavender">
         <ArchiveBoxIcon className=""/>
         <p className="text-center text-2xl ">Your messages</p>
         <p className="text-center opacity-60 p-2 ">Choose a chat to start.</p>

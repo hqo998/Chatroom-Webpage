@@ -59,7 +59,7 @@ export async function tryRegister(
   formData: FormData
 ) {
 
-  const username = formData.get("username")?.toString().trim();
+  const username = formData.get("username")?.toString().trim().toLowerCase();
   const password = formData.get("password")?.toString();
   const confirmPassword = formData.get("confirm_password")?.toString();
 
@@ -71,6 +71,7 @@ export async function tryRegister(
     return "Missing required fields";
   }
 
+  if (username.length > 24) return 'Name too long'
   if (username.length < 3) return 'Name too short.'
   if (password.length < 8) return 'Password too short.'
 
