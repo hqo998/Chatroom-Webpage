@@ -7,5 +7,10 @@ export type User = {
 }
 
 export type chatTileProps = {
-  
-} 
+  chatid: string;
+  chatname: string;
+  last_message: string;
+  timestamp: string;
+  unread_count: number;
+  avatar: string;
+}
