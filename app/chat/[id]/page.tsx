@@ -5,6 +5,7 @@ export default function Home() {
     <>
     <div className="flex-1 overflow-y-auto bg-graphite ">
     {/* {children_here} */}
+      
     </div>
 
     <div className="flex justify-center h-15 shrink-0 p-3 border-gray-800 bg-gray-800">
