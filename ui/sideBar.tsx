@@ -6,18 +6,13 @@ import SearchFriends from "@/ui/searchFriends";
 import SignOutButton from "@/ui/SignOutButton";
 import FriendList from "@/ui/chat_elements/friendList";
 
-
-
-export default async function SideBar() {
-  const session = await auth();
-  const user = session?.user;
-
+export default function SideBar({user}: {user: any}) {
   return (
     <div className={`hidden md:flex md:flex-col overflow-hidden min-h-0 shrink-0 rounded-2xl bg-graphite ${intern.className} antialiased drop-shadow-black drop-shadow-lg`}>
       {/* Search area */}
         <div className="flex flex-row justify-center items-center shrink-0 h-15 p-3 bg-barbie-pink">
         <SearchFriends />
-        <Link 
+        <Link
           href="/chat/new"
           className="pl-3"
         >
