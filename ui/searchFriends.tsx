@@ -9,7 +9,7 @@ export default function SearchFriends() {
   const { replace } = useRouter();
 
   const handleSearch = useDebouncedCallback((term) => {
-    console.log(`Searching... ${term}`);
+    // console.log(`Searching... ${term}`);
 
     const params = new URLSearchParams(searchParams);
     if (term) {
@@ -18,7 +18,7 @@ export default function SearchFriends() {
       params.delete('query');
     }
     replace(`${pathName}?${params.toString()}`);
-  }, 500);
+  }, 200);
 
   return (
           <input

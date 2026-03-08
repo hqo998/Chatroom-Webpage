@@ -2,17 +2,25 @@
 
 import { friendsListData } from "@/lib/placeholder-data";
 import ChatTile from "@/ui/chat_elements/chatTile";
+import { chatTileProps } from "@/lib/definitions";
 
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useState, useEffect } from "react";
 
 export default function FriendList() {
-  const data = friendsListData;
+  const [ data, setData ] = useState<chatTileProps[]>([]);
+  
+  useEffect(() => {
+    setData(friendsListData)
+  }, [])
+
+  // const data = friendsListData;
   const searchParams = useSearchParams();
 
   const query = searchParams.get('query');
 
   const displayData = data.filter(term => term.chatname.toLowerCase().includes(query || ""));
-  console.log(displayData);
+  // console.log(displayData);
 
   return (
     <>
