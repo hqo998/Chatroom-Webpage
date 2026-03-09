@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/ui/button";
 import { useActionState } from 'react';
-import { authenticate } from "@/lib/actions";
+import { authenticate } from "@/lib/AccountActions";
 import { useSearchParams } from "next/navigation";
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 

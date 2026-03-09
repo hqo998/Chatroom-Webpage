@@ -2,7 +2,7 @@
 
 import { Button } from "./button";
 import { PowerIcon } from "@heroicons/react/24/solid";
-import { logOut } from "@/lib/actions";
+import { logOut } from "@/lib/AccountActions";
 
 export default function SignOutButton() {
   return (

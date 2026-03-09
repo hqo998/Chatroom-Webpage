@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { tryRegister } from "@/lib/actions";
+import { tryRegister } from "@/lib/AccountActions";
 import { Button } from "@/ui/button";
 import { useActionState } from "react";
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
