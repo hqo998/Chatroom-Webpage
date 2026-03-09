@@ -18,7 +18,7 @@ export default function ChatTile(props: chatTileProps) {
 
       {props.unread_count !== 0 ? (
         <div className="bg-barbie-pink mr-1 w-6 h-6 aspect-square rounded-full flex items-center justify-center">
-          <p className={`${bitcount.className} antialiased text-white transform -translate-y-[-1.5px] translate-x-[1px]`}>
+          <p className={`${bitcount.className} antialiased text-white transform -translate-y-[-1.2px] translate-x-[.5px]`}>
             {props.unread_count}
           </p>
         </div>
