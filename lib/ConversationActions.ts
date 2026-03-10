@@ -54,15 +54,25 @@ export async function createChat(prevState: any, username: string) {
 
 export async function otherParticipants(conversation_id: string) {
   const session = await auth();
+  const uuidV4Pattern =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
   // make sure that the user is logged in and session as id
   if (!session?.user.id) {
     console.warn('Not Authenticated');
+    return [];
+  }
+
+  // participants.conversation_id is UUID in Postgres; reject invalid ids early.
+  if (!uuidV4Pattern.test(conversation_id)) {
+    return [];
   }
 
   // get participants
-  const participants = await sql`SELECT user_id FROM participants WHERE conversation_id = ${conversation_id}`;
-  if (!participants[0]) console.warn('Not Authenticated');
+  const participants = await sql<{ user_id: string }[]>`
+    SELECT user_id FROM participants WHERE conversation_id = ${conversation_id}
+  `;
+  if (!participants[0]) return [];
 
   // squash into array
   let participantNames: string[] = [];
