@@ -7,11 +7,10 @@ import { User } from '@/lib/definitions';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function seedUsers() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await sql`
     CREATE TABLE IF NOT EXISTS users (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
       name VARCHAR(255) NOT NULL UNIQUE,
       password TEXT NOT NULL,
       admin BOOL NOT NULL DEFAULT FALSE,
@@ -37,7 +36,7 @@ async function seedUsers() {
 async function seedMessages() {
   await sql`
     CREATE TABLE IF NOT EXISTS messages (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
       conversation_id UUID NOT NULL REFERENCES conversations(id) ON DELETE CASCADE,
       sender_id UUID REFERENCES users(id) ON DELETE SET NULL,
 
@@ -61,11 +60,11 @@ async function seedParticipants() {
 }
 
 async function seedConversations() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`
+
 
   await sql`
     CREATE TABLE IF NOT EXISTS conversations (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
       title VARCHAR(60),
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
