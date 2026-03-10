@@ -42,4 +42,25 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    ...authConfig.callbacks,
+    async jwt({ token, user }) {
+      if (user) {
+        // 'user' is only available on first sign-in
+        token.id = user.id!;
+        token.image_url = user.image_url;
+        token.admin = user.admin;
+        token.created_at = user.created_at;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Copy from token into the session that auth() returns
+      session.user.id = token.id as string;
+      session.user.image_url = token.image_url as string;
+      session.user.admin = token.admin as boolean;
+      session.user.created_at = token.created_at as string;
+      return session;
+    },
+  },
 });

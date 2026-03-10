@@ -10,9 +10,9 @@ export const authConfig = {
       const isOnChatPage = nextUrl.pathname.startsWith('/chat');
       if (isOnChatPage) {
         if (isLoggedIn) return true;
-        // return false; // Redirect unauthenticated users to login page
+        return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
-        return Response.redirect(new URL('/chat', nextUrl));
+        // return Response.redirect(new URL('/chat', nextUrl));
       }
       return true;
     },

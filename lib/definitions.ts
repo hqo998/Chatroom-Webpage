@@ -4,6 +4,7 @@ export type User = {
   password: string;
   image_url: string;
   admin: boolean;
+  created_at: string;
 }
 
 export type chatTileProps = {

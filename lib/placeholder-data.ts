@@ -4,7 +4,8 @@ const users = [
     name: 'charles',
     password: 'charles',
     admin: true,
-    image_url: ";"
+    image_url: ";",
+    created_at: "0",
   }
 ];
 
