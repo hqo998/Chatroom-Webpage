@@ -51,3 +51,33 @@ export async function createChat(prevState: any, username: string) {
   // redirect user to new conversation id
   redirect(`/chat/${existingChat[0].conversation_id}`);
 }
+
+export async function otherParticipants(conversation_id: string) {
+  const session = await auth();
+
+  // make sure that the user is logged in and session as id
+  if (!session?.user.id) {
+    console.warn('Not Authenticated');
+  }
+
+  // get participants
+  const participants = await sql`SELECT user_id FROM participants WHERE conversation_id = ${conversation_id}`;
+  if (!participants[0]) console.warn('Not Authenticated');
+
+  // squash into array
+  let participantNames: string[] = [];
+
+  for (const participant of participants) {
+    const rows = await sql<{ name: string }[]>`
+      SELECT name FROM users WHERE id = ${participant.user_id}
+    `;
+    if (rows[0]) participantNames.push(rows[0].name);
+  }
+
+  // remove themselves
+  participantNames = participantNames.filter(term => term !== session?.user.name)
+
+  console.log(participantNames);
+
+  return participantNames
+}

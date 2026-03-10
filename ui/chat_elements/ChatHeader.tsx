@@ -2,20 +2,38 @@
 
 import { bitcount } from "@/ui/fonts";
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { otherParticipants } from "@/lib/ConversationActions";
+import { useState, useEffect } from "react";
+import { auth } from "@/auth";
 
 export default function ChatHeader() {
+
   const pathName = usePathname();
   const SplitPath = pathName.split('/');
-  
-  const ConversationID = SplitPath[SplitPath.length - 1];
+  const [ conversationName, setConversationName ] = useState<string[]>([]);
 
-  const ConversationName = ConversationID; // temp
+  useEffect(() => {
+  const loadConversationName = async () => {
+    const conversationID = SplitPath[SplitPath.length - 1];
+    const convoNames = (await otherParticipants(conversationID))
+    console.log(convoNames);
+
+    if (!convoNames) setConversationName(["Failed to get chat name."]);
+
+    setConversationName(convoNames);
+  };
+
+  loadConversationName();
+}, []);
+
 
   return (
-    <div className="flex-1 flex flex-row justify-between items-center px-5">
-      <p className={`${bitcount.className} antialiased text-2xl`}>
-        @{ConversationName}
-      </p>
+    <div className="flex-1 flex flex-row justify-left gap-3 items-center px-5 overflow-x-auto">
+      {conversationName.map((name) =>
+        <p key={name} className={`${bitcount.className} antialiased text-2xl`}>
+          @{name}
+        </p>
+      )}
     </div>
   );
 };
