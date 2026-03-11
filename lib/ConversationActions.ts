@@ -7,7 +7,19 @@ import postgres from 'postgres';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export async function friendList() {
+function checkUUIDvalid(uuid: string) {
+  const uuidV4Pattern =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  if (!uuidV4Pattern.test(uuid)) {
+    return false;
+  }
+
+  return true;
+
+}
+
+export async function getFriendList() {
   const session = await auth();
 
   if (!session?.user.id) {
@@ -100,8 +112,6 @@ export async function createChat(prevState: any, username: string) {
 
 export async function otherParticipants(conversation_id: string) {
   const session = await auth();
-  const uuidV4Pattern =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
   // make sure that the user is logged in and session as id
   if (!session?.user.id) {
@@ -110,7 +120,7 @@ export async function otherParticipants(conversation_id: string) {
   }
 
   // participants.conversation_id is UUID in Postgres; reject invalid ids early.
-  if (!uuidV4Pattern.test(conversation_id)) {
+  if (!checkUUIDvalid(conversation_id)) {
     return [];
   }
 
@@ -136,4 +146,33 @@ export async function otherParticipants(conversation_id: string) {
   // console.log(participantNames);
 
   return participantNames
+}
+
+export async function sendMessage(conversation_id: string, content: string) {
+  const session = await auth();
+
+  if (!session?.user.id) {
+    console.warn('Not Authenticated');
+    return;
+  }
+
+  // check uuid is valid
+  if (!checkUUIDvalid(conversation_id)) {
+    return;
+  }
+
+  // verify user is participant in conversation.
+  const checkLegit = await sql<{user_id: string}[]>`
+                                SELECT user_id
+                                FROM participants
+                                WHERE
+                                  user_id = ${session.user.id}
+                                  AND conversation_id = ${conversation_id}`
+  if (!checkLegit) return;
+
+  // save message to conversation.
+  await sql`INSERT INTO messages (conversation_id, sender_id, content)
+            VALUES (${conversation_id}, ${session.user.id}, ${content})
+            ON CONFLICT (id) DO NOTHING`
+
 }

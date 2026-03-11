@@ -6,14 +6,14 @@ import { friendListItem } from "@/lib/definitions";
 
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from "react";
-import { friendList } from "@/lib/ConversationActions";
+import { getFriendList } from "@/lib/ConversationActions";
 
 export default function FriendList() {
   const [ data, setData ] = useState<friendListItem[]>([]);
   
   useEffect(() => {
     const loadFriendList = async () => {
-      const friendListInfo = await friendList();
+      const friendListInfo = await getFriendList();
       console.log(friendListInfo);
 
       setData(friendListInfo);
