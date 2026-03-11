@@ -7,11 +7,11 @@ export type User = {
   created_at: string;
 }
 
-export type chatTileProps = {
+export type friendListItem = {
   chatid: string;
   chatname: string;
   last_message: string;
-  timestamp: string;
+  // timestamp: string;
   unread_count: number;
   avatar: string;
 }

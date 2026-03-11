@@ -1,11 +1,57 @@
 'use server'
 
 import { auth } from "@/auth";
-import type { User } from '@/lib/definitions';
+import type { friendListItem, User } from '@/lib/definitions';
 import { redirect } from "next/navigation";
 import postgres from 'postgres';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+
+export async function friendList() {
+  const session = await auth();
+
+  if (!session?.user.id) {
+    console.warn('Not Authenticated');
+    return [];
+  }
+
+  const chats: friendListItem[] = [];
+
+  // get conversations user is in.
+  const convoInfo = await sql`SELECT conversation_id, last_read_at FROM participants WHERE user_id = ${session.user.id}`;
+
+
+  for (const info of convoInfo) {
+    const name = ((await otherParticipants(info.conversation_id))[0] ?? "Unknown");
+
+    const messages = (await sql<{ content: string; created_at: Date }[]>`SELECT content, created_at
+                      FROM messages
+                      WHERE conversation_id = ${info.conversation_id}
+                      ORDER BY created_at DESC
+                      LIMIT 100
+                      `)
+
+    
+
+    const lastMessage = messages[0]?.content ?? null;
+
+    const lastMessageCount = messages.filter(
+      (m) => info.last_read_at && m.created_at > info.last_read_at
+    ).length;
+
+    chats.push({
+      chatid: info.conversation_id,
+      chatname: name,
+      last_message: lastMessage,
+      unread_count: lastMessageCount,
+      avatar: "",
+    });
+  }
+
+
+  return chats;
+}
+
 
 export async function createChat(prevState: any, username: string) {
   const session = await auth();
@@ -87,7 +133,7 @@ export async function otherParticipants(conversation_id: string) {
   // remove themselves
   participantNames = participantNames.filter(term => term !== session?.user.name)
 
-  console.log(participantNames);
+  // console.log(participantNames);
 
   return participantNames
 }

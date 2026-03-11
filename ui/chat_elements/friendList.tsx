@@ -1,17 +1,26 @@
 'use client';
 
-import { friendsListData } from "@/lib/placeholder-data";
+// import { friendsListData } from "@/lib/placeholder-data";
 import ChatTile from "@/ui/chat_elements/chatTile";
-import { chatTileProps } from "@/lib/definitions";
+import { friendListItem } from "@/lib/definitions";
 
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from "react";
+import { friendList } from "@/lib/ConversationActions";
 
 export default function FriendList() {
-  const [ data, setData ] = useState<chatTileProps[]>([]);
+  const [ data, setData ] = useState<friendListItem[]>([]);
   
   useEffect(() => {
-    setData(friendsListData)
+    const loadFriendList = async () => {
+      const friendListInfo = await friendList();
+      console.log(friendListInfo);
+
+      setData(friendListInfo);
+    }
+
+    loadFriendList();
+
   }, [])
 
   // const data = friendsListData;
