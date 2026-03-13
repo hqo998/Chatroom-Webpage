@@ -14,7 +14,7 @@ export default function FriendList() {
   useEffect(() => {
     const loadFriendList = async () => {
       const friendListInfo = await getFriendList();
-      console.log(friendListInfo);
+      // console.log(friendListInfo);
 
       setData(friendListInfo);
     }

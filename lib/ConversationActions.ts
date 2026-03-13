@@ -1,7 +1,7 @@
 'use server'
 
 import { auth } from "@/auth";
-import type { friendListItem, User } from '@/lib/definitions';
+import type { chatMessageProps, friendListItem, User } from '@/lib/definitions';
 import { redirect } from "next/navigation";
 import postgres from 'postgres';
 
@@ -168,11 +168,57 @@ export async function sendMessage(conversation_id: string, content: string) {
                                 WHERE
                                   user_id = ${session.user.id}
                                   AND conversation_id = ${conversation_id}`
-  if (!checkLegit) return;
+  if (!checkLegit[0]) return;
 
   // save message to conversation.
   await sql`INSERT INTO messages (conversation_id, sender_id, content)
             VALUES (${conversation_id}, ${session.user.id}, ${content})
             ON CONFLICT (id) DO NOTHING`
 
+  // console.log("message saved");
+}
+
+export async function getConversationMessages(conversation_id: string) {
+  const session = await auth();
+
+  if (!session?.user.id) {
+    console.warn('Not Authenticated');
+    return [];
+  }
+
+  // participants.conversation_id is UUID in Postgres; reject invalid ids early.
+  if (!checkUUIDvalid(conversation_id)) {
+    return [];
+  }
+
+  // verify user is participant in conversation.
+  const checkLegit = await sql<{user_id: string}[]>`
+                                SELECT user_id
+                                FROM participants
+                                WHERE
+                                  user_id = ${session.user.id}
+                                  AND conversation_id = ${conversation_id}`
+  if (!checkLegit[0]) return [];
+
+  // get messages in conversation.
+
+  const messages = (await sql<{ content: string; created_at: Date; sender_id: string; id: string }[]>`SELECT content, created_at, sender_id, id
+                      FROM messages
+                      WHERE conversation_id = ${conversation_id}
+                      ORDER BY created_at DESC
+                      LIMIT 100
+                      `);
+
+  const chatMessages: chatMessageProps[] = [];
+  
+  for (const text of messages) {
+    chatMessages.push({
+      timestamp: text.created_at,
+      message: text.content,
+      messageid: text.id,
+      sender: text.sender_id,
+  });
+  }
+
+  return chatMessages;
 }

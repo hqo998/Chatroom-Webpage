@@ -5,7 +5,7 @@ const users = [
     password: 'charles',
     admin: true,
     image_url: ";",
-    created_at: "0",
+    created_at: new Date(),
   }
 ];
 

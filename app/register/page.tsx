@@ -6,6 +6,5 @@ export default function Home() {
     <Suspense >
       <RegisterForm />
     </Suspense>
-    
   );
 }

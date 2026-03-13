@@ -1,10 +1,9 @@
 'use client';
 
 import { bitcount } from "@/ui/fonts";
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { otherParticipants } from "@/lib/ConversationActions";
 import { useState, useEffect } from "react";
-import { auth } from "@/auth";
 
 export default function ChatHeader() {
 
@@ -16,7 +15,7 @@ export default function ChatHeader() {
   const loadConversationName = async () => {
     const conversationID = SplitPath[SplitPath.length - 1];
     const convoNames = (await otherParticipants(conversationID))
-    console.log(convoNames);
+    // console.log(convoNames);
 
     if (!convoNames) setConversationName(["Failed to get chat name."]);
 

@@ -4,7 +4,7 @@ export type User = {
   password: string;
   image_url: string;
   admin: boolean;
-  created_at: string;
+  created_at: Date;
 }
 
 export type friendListItem = {
@@ -20,6 +20,10 @@ export type chatMessageProps = {
   messageid: string;
   message: string;
   sender: string;
-  conversationid: string;
-  timestamp: string;
+  // conversationid: string;
+  timestamp: Date;
+}
+
+export type convoID = {
+  id: string,
 }
