@@ -107,7 +107,7 @@ export async function createChat(prevState: any, username: string) {
   }
 
   // redirect user to new conversation id
-  redirect(`/chat/${existingChat[0].conversation_id}`);
+  redirect(`/chat/${newChat[0].id}`);
 }
 
 export async function otherParticipants(conversation_id: string) {
