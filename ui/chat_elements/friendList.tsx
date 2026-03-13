@@ -1,12 +1,10 @@
 'use client';
 
-// import { friendsListData } from "@/lib/placeholder-data";
 import ChatTile from "@/ui/chat_elements/chatTile";
 import { friendListItem } from "@/lib/definitions";
-
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef } from "react";
-import { getFriendList } from "@/lib/ConversationActions";
+import { useState, useEffect } from "react";
+import { getFriendList, updateLastReadParticipant } from "@/lib/ConversationActions";
 
 export default function FriendList() {
   const [ data, setData ] = useState<friendListItem[]>([]);
