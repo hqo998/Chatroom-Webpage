@@ -110,6 +110,7 @@ export async function createChat(prevState: any, username: string) {
   redirect(`/chat/${newChat[0].id}`);
 }
 
+
 export async function otherParticipants(conversation_id: string) {
   const session = await auth();
 
@@ -178,6 +179,16 @@ export async function sendMessage(conversation_id: string, content: string) {
   // console.log("message saved");
 }
 
+export async function getUsernameFromID(user_id: string) {
+  if (!checkUUIDvalid(user_id)) {
+    return "";
+  }
+
+  const name = await sql<{name: string}[]>`SELECT name FROM users WHERE id = ${user_id}`;
+
+  return name ? name[0].name : "";
+}
+
 export async function getConversationMessages(conversation_id: string) {
   const session = await auth();
 
@@ -197,7 +208,7 @@ export async function getConversationMessages(conversation_id: string) {
                                 FROM participants
                                 WHERE
                                   user_id = ${session.user.id}
-                                  AND conversation_id = ${conversation_id}`
+                                  AND conversation_id = ${conversation_id}`;
   if (!checkLegit[0]) return [];
 
   // get messages in conversation.
@@ -210,13 +221,15 @@ export async function getConversationMessages(conversation_id: string) {
                       `);
 
   const chatMessages: chatMessageProps[] = [];
-  
+
   for (const text of messages) {
+    const name = await getUsernameFromID(text.sender_id);
+
     chatMessages.push({
       timestamp: text.created_at,
       message: text.content,
       messageid: text.id,
-      sender: text.sender_id,
+      sender: name,
   });
   }
 

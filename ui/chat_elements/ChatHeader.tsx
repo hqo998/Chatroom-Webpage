@@ -1,26 +1,15 @@
-'use client';
-
 import { bitcount } from "@/ui/fonts";
-import { usePathname } from 'next/navigation';
 import { otherParticipants } from "@/lib/ConversationActions";
-import { useState, useEffect } from "react";
 
 import { convoID } from "@/lib/definitions";
 
-export default function ChatHeader({ convoID: id }: convoID) {
+export default async function ChatHeader({ convoID: id }: convoID) {
   const conversationID = id;
+  const convoNames = (await otherParticipants(conversationID));
 
-  const [ conversationName, setConversationName ] = useState<string[]>([]);
-
-  useEffect(() => {
-    const loadConversationName = async () => {
-      const convoNames = (await otherParticipants(conversationID))
-      if (!convoNames) setConversationName(["Failed to get chat name."]);
-      setConversationName(convoNames);
-    }
-    loadConversationName();
-  }, []);
-
+  let conversationName = []
+  if (!convoNames) conversationName = ["Failed to get chat name."];
+  conversationName = convoNames;
 
   return (
     <div className="flex-1 flex flex-row justify-left gap-3 items-center px-5 overflow-x-auto">
