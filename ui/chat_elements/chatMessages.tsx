@@ -7,8 +7,9 @@ export default async function ChatMessages({ convoID: id }: convoID) {
   const conversationID = id;
   const messages = (await getConversationMessages(conversationID)) ?? [];
 
-  // console.log("id: " + conversationID);
-  // console.log("messages: " + messages);
+  // onload() = async () => {
+  //   (await getConversationMessages(conversationID)) ?? []
+  // };
 
   return (
     <div>

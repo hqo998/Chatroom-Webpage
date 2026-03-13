@@ -181,6 +181,8 @@ export async function sendMessage(conversation_id: string, content: string) {
                                   AND conversation_id = ${conversation_id}`
   if (!checkLegit[0]) return;
 
+  if (content.length > 2000) return;
+
   // save message to conversation.
   await sql`INSERT INTO messages (conversation_id, sender_id, content)
             VALUES (${conversation_id}, ${session.user.id}, ${content})

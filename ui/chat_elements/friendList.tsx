@@ -5,7 +5,7 @@ import ChatTile from "@/ui/chat_elements/chatTile";
 import { friendListItem } from "@/lib/definitions";
 
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getFriendList } from "@/lib/ConversationActions";
 
 export default function FriendList() {
@@ -20,6 +20,12 @@ export default function FriendList() {
     }
 
     loadFriendList();
+
+    const interval = setInterval(() => {
+      loadFriendList();
+    }, 5000);
+
+    return () => clearInterval(interval);
 
   }, [])
 
