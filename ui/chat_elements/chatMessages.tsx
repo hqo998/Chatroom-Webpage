@@ -1,12 +1,9 @@
 
 import { getConversationMessages } from "@/lib/ConversationActions";
+import { convoID } from "@/lib/definitions";
 import ChatBubble from "@/ui/chat_elements/chatBubble";
 
-type ChatMessagesProps = {
-  id: string;
-};
-
-export default async function ChatMessages({ id }: ChatMessagesProps) {
+export default async function ChatMessages({ convoID: id }: convoID) {
   const conversationID = id;
   const messages = (await getConversationMessages(conversationID)) ?? [];
 
@@ -15,7 +12,7 @@ export default async function ChatMessages({ id }: ChatMessagesProps) {
 
   return (
     <div className="rounded-2xl">
-      {messages && (messages.map((bubble) => (
+      {messages && (messages.toReversed().map((bubble) => (
               <ChatBubble key={bubble.messageid} {...bubble}/>
             )))}
 

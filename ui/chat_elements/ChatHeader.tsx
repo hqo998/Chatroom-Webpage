@@ -5,25 +5,21 @@ import { usePathname } from 'next/navigation';
 import { otherParticipants } from "@/lib/ConversationActions";
 import { useState, useEffect } from "react";
 
-export default function ChatHeader() {
+import { convoID } from "@/lib/definitions";
 
-  const pathName = usePathname();
-  const SplitPath = pathName.split('/');
+export default function ChatHeader({ convoID: id }: convoID) {
+  const conversationID = id;
+
   const [ conversationName, setConversationName ] = useState<string[]>([]);
 
   useEffect(() => {
-  const loadConversationName = async () => {
-    const conversationID = SplitPath[SplitPath.length - 1];
-    const convoNames = (await otherParticipants(conversationID))
-    // console.log(convoNames);
-
-    if (!convoNames) setConversationName(["Failed to get chat name."]);
-
-    setConversationName(convoNames);
-  };
-
-  loadConversationName();
-}, []);
+    const loadConversationName = async () => {
+      const convoNames = (await otherParticipants(conversationID))
+      if (!convoNames) setConversationName(["Failed to get chat name."]);
+      setConversationName(convoNames);
+    }
+    loadConversationName();
+  }, []);
 
 
   return (

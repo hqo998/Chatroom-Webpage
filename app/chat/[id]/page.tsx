@@ -14,16 +14,16 @@ export default async function Home({ params }: ChatPageProps) {
   return (
     <>
     <div className="flex-1 flex max-h-15 bg-gray-800">
-      <ChatHeader />
+      <ChatHeader convoID={id}/>
     </div>
 
     <div className="flex-1 overflow-y-auto bg-graphite ">
     {/* {children_here} */}
-    <ChatMessages id={id}/>
+    <ChatMessages convoID={id}/>
     </div>
 
     {/* text field */}
-    <MessageField conversationId={id} />
+    <MessageField convoID={id} />
     </>
   );
 }

@@ -1,19 +1,18 @@
 'use client';
 
 import { sendMessage } from "@/lib/ConversationActions";
+import { convoID } from "@/lib/definitions";
 
-type MessageFieldProps = {
-  conversationId: string;
-};
 
-export default function MessageField({ conversationId }: MessageFieldProps) {
+
+export default function MessageField({ convoID: id }: convoID) {
 
   async function sendMessageAction(formData: FormData) {
 
     const messageContent = String(formData.get('messagebox') ?? '').trim();
     if (!messageContent) return;
 
-    await sendMessage(conversationId, messageContent);
+    await sendMessage(id, messageContent);
   }
 
   return (

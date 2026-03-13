@@ -25,5 +25,5 @@ export type chatMessageProps = {
 }
 
 export type convoID = {
-  id: string,
+  convoID: string,
 }
