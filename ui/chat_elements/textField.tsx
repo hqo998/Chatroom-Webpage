@@ -2,17 +2,21 @@
 
 import { sendMessage } from "@/lib/ConversationActions";
 import { convoID } from "@/lib/definitions";
+import { useRouter } from "next/navigation";
 
 
 
 export default function MessageField({ convoID: id }: convoID) {
+  const router = useRouter();
 
   async function sendMessageAction(formData: FormData) {
 
     const messageContent = String(formData.get('messagebox') ?? '').trim();
     if (!messageContent) return;
+    if (messageContent.length > 2000) return
 
     await sendMessage(id, messageContent);
+    router.refresh();
   }
 
   return (

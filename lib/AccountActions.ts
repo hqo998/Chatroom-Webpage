@@ -73,6 +73,11 @@ export async function tryRegister(
     return "Missing required fields";
   }
 
+  const allowedCharacters = "abcdefghijklmnopqrstuvwxyz1234567890"
+  for (const letter of username) {
+    if (!allowedCharacters.includes(letter)) return "No special charcters allowed in username.";
+  }
+
   if (username.length > 24) return 'Name too long'
   if (username.length < 3) return 'Name too short.'
   if (password.length < 8) return 'Password too short.'

@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import type { chatMessageProps, friendListItem, User } from '@/lib/definitions';
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import postgres from 'postgres';
 
@@ -43,9 +44,15 @@ export async function getFriendList() {
                       LIMIT 100
                       `)
 
+    const lastMessage = messages[0]?.content ?? "";
     
-
-    const lastMessage = messages[0]?.content ?? null;
+    // filter by creation date or last message date if message exists.
+    let lastMessageTime = new Date();
+    if (messages[0]?.created_at) {
+      lastMessageTime = messages[0]?.created_at;
+    } else {
+      lastMessageTime = (await sql`SELECT created_at FROM conversations WHERE id = ${info.conversation_id} LIMIT 1`)[0].created_at;
+    }
 
     const lastMessageCount = messages.filter(
       (m) => info.last_read_at && m.created_at > info.last_read_at
@@ -54,12 +61,15 @@ export async function getFriendList() {
     chats.push({
       chatid: info.conversation_id,
       chatname: name,
+      last_timestamp: lastMessageTime,
       last_message: lastMessage,
       unread_count: lastMessageCount,
       avatar: "",
     });
   }
 
+  // sort em by date.
+  chats.sort((a, b) => b.last_timestamp.getTime() - a.last_timestamp.getTime())
 
   return chats;
 }
@@ -176,6 +186,9 @@ export async function sendMessage(conversation_id: string, content: string) {
             VALUES (${conversation_id}, ${session.user.id}, ${content})
             ON CONFLICT (id) DO NOTHING`
 
+  revalidatePath(`/chat/${conversation_id}`);
+  revalidatePath('/chat');
+
   // console.log("message saved");
 }
 
@@ -229,9 +242,31 @@ export async function getConversationMessages(conversation_id: string) {
       timestamp: text.created_at,
       message: text.content,
       messageid: text.id,
+      senderId: text.sender_id,
+      viewerId: session.user.id,
       sender: name,
   });
   }
 
   return chatMessages;
+}
+
+export async function updateLastReadParticipant(conversation_id: string) {
+  const session = await auth();
+
+  if (!session?.user.id) {
+    console.warn('Not Authenticated');
+    return [];
+  }
+
+  // participants.conversation_id is UUID in Postgres; reject invalid ids early.
+  if (!checkUUIDvalid(conversation_id)) {
+    return [];
+  }
+
+  await sql`UPDATE participants
+            SET last_read_at = NOW()
+            WHERE
+              conversation_id = ${conversation_id}
+              AND user_id = ${session.user.id}`;
 }

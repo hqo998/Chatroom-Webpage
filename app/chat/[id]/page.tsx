@@ -1,3 +1,4 @@
+import { updateLastReadParticipant } from "@/lib/ConversationActions";
 import ChatHeader from "@/ui/chat_elements/ChatHeader";
 import ChatMessages from "@/ui/chat_elements/chatMessages";
 import MessageField from "@/ui/chat_elements/textField";
@@ -10,6 +11,7 @@ type ChatPageProps = {
 
 export default async function Home({ params }: ChatPageProps) {
   const { id } = await params;
+  await updateLastReadParticipant(id);
 
   return (
     <>

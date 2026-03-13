@@ -11,7 +11,7 @@ export type friendListItem = {
   chatid: string;
   chatname: string;
   last_message: string;
-  // timestamp: string;
+  last_timestamp: Date;
   unread_count: number;
   avatar: string;
 }
@@ -19,6 +19,8 @@ export type friendListItem = {
 export type chatMessageProps = {
   messageid: string;
   message: string;
+  senderId: string;
+  viewerId: string;
   sender: string;
   // conversationid: string;
   timestamp: Date;

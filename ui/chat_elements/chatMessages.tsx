@@ -7,18 +7,14 @@ export default async function ChatMessages({ convoID: id }: convoID) {
   const conversationID = id;
   const messages = (await getConversationMessages(conversationID)) ?? [];
 
-  console.log("id: " + conversationID);
-  console.log("messages: " + messages);
+  // console.log("id: " + conversationID);
+  // console.log("messages: " + messages);
 
   return (
-    <div className="rounded-2xl">
+    <div>
       {messages && (messages.toReversed().map((bubble) => (
               <ChatBubble key={bubble.messageid} {...bubble}/>
             )))}
-
-      {/* {messages.map((bubble) => (
-              <ChatBubble key={bubble.messageid} {...bubble}/>
-            ))} */}
     </div>
   );
 }
