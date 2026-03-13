@@ -1,8 +1,11 @@
+const admin_username = process.env.ADMIN_USERNAME!;
+const admin_password = process.env.ADMIN_PASSWORD!;
+
 const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
-    name: 'charles',
-    password: 'charles',
+    name: admin_username,
+    password: admin_password,
     admin: true,
     image_url: ";",
     created_at: new Date(),
