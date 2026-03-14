@@ -19,7 +19,7 @@ export default async function Home({ params }: ChatPageProps) {
       <ChatHeader convoID={id}/>
     </div>
 
-    <div className="flex-1 overflow-y-auto bg-graphite ">
+    <div className="flex-1 flex overflow-y-auto bg-graphite ">
     {/* {children_here} */}
     <ChatMessages convoID={id}/>
     </div>

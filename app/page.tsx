@@ -1,7 +1,11 @@
 import { LoginForm } from "@/ui/loginForm";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <LoginForm />
+    <Suspense>
+      <LoginForm />
+    </Suspense>
+    
   );
 }

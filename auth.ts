@@ -59,7 +59,7 @@ export const { auth, signIn, signOut } = NextAuth({
       session.user.id = token.id as string;
       session.user.image_url = token.image_url as string;
       session.user.admin = token.admin as boolean;
-      session.user.created_at = token.created_at as string;
+      session.user.created_at = token.created_at as Date;
       return session;
     },
   },
