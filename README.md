@@ -2,7 +2,7 @@
 
 # Chatroom Website
 
-
+A personal project to learn fullstack technologies and further explore web dev.
 
 ## Features
 
