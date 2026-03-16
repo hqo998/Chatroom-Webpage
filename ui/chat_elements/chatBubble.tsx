@@ -8,14 +8,12 @@ export default function ChatBubble(props: chatMessageProps) {
 
   return (
     <div className={clsx(
-      "flex flex-1 min-w-0 justify-start",
+      "flex flex-1 min-w-0 w-full",
       {
-        'justify-start': viewersMessage === false,
         'justify-end': viewersMessage === true,
+        'justify-start': viewersMessage === false,
       },
     )}>
-
-
       <div className={clsx(
         "rounded-2xl p-3 m-2 overflow-clip",
         {

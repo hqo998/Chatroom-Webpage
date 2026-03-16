@@ -12,7 +12,7 @@ export default async function ChatMessages({ convoID: id }: convoID) {
   // };
 
   return (
-    <div>
+    <div className="flex-1">
       {messages && (messages.toReversed().map((bubble) => (
               <ChatBubble key={bubble.messageid} {...bubble}/>
             )))}
