@@ -1,6 +1,6 @@
 'use client';
 
-import { getConversationMessages } from "@/lib/ConversationActions";
+import { getConversationMessages, updateLastReadParticipant } from "@/lib/ConversationActions";
 import { chatMessageProps, convoID } from "@/lib/definitions";
 import ChatBubble from "@/ui/chat_elements/chatBubble";
 import { useEffect, useRef, useState } from "react";
@@ -24,6 +24,7 @@ export default function ChatMessages({ convoID: id }: convoID) {
     onload();
 
     const interval = setInterval(() => {
+      updateLastReadParticipant(id);
       onload();
     }, 2000);
 
@@ -36,7 +37,7 @@ export default function ChatMessages({ convoID: id }: convoID) {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages])
 
-  
+
   return (
     <div className="flex-1 overflow-y-auto">
       {messages && (messages.toReversed().map((bubble) => (
