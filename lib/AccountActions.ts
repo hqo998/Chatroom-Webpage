@@ -73,7 +73,7 @@ export async function tryRegister(
     return "Missing required fields";
   }
 
-  const allowedCharacters = "abcdefghijklmnopqrstuvwxyz1234567890"
+  const allowedCharacters = "abcdefghijklmnopqrstuvwxyz1234567890-_"
   for (const letter of username) {
     if (!allowedCharacters.includes(letter)) return "No special charcters allowed in username.";
   }
