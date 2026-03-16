@@ -2,6 +2,7 @@ import { updateLastReadParticipant } from "@/lib/ConversationActions";
 import ChatHeader from "@/ui/chat_elements/ChatHeader";
 import ChatMessages from "@/ui/chat_elements/chatMessages";
 import MessageField from "@/ui/chat_elements/textField";
+import { Suspense } from "react";
 
 type ChatPageProps = {
   params: Promise<{
@@ -20,12 +21,16 @@ export default async function Home({ params }: ChatPageProps) {
     </div>
 
     <div className="flex-1 flex overflow-y-auto bg-graphite ">
-    {/* {children_here} */}
-    <ChatMessages convoID={id}/>
+      {/* {children_here} */}
+      <Suspense>
+        <ChatMessages convoID={id}/>
+      </Suspense>
     </div>
 
     {/* text field */}
-    <MessageField convoID={id} />
+    <Suspense>
+      <MessageField convoID={id} />
+    </Suspense>
     </>
   );
 }

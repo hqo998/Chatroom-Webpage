@@ -8,8 +8,9 @@ export default async function ChatHeader({ convoID: id }: convoID) {
   const convoNames = (await otherParticipants(conversationID));
 
   let conversationName = []
-  if (!convoNames) conversationName = ["Failed to get chat name."];
   conversationName = convoNames;
+
+  if (convoNames.length < 1) conversationName = ["Unknown User or Failed to get chat name."];
 
   return (
     <div className="flex-1 flex flex-row justify-left gap-3 items-center px-5 overflow-x-auto">
