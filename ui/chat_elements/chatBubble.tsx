@@ -15,14 +15,14 @@ export default function ChatBubble(props: chatMessageProps) {
       },
     )}>
       <div className={clsx(
-        "rounded-2xl p-3 m-2 overflow-clip",
+        "rounded-2xl p-3 m-2 overflow-clip max-w-4/5",
         {
           'bg-cyan-500': viewersMessage === true,
           'bg-green-500': viewersMessage === false,
         },
       )}>
         <p className={`${bitcount.className} antialiased opacity-80 overflow-clip`}>
-          @{props.sender}
+          @{props.sender ? props.sender : "Unknown"}
         </p>
         <p>
           {props.message}
