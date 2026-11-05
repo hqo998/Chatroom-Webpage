@@ -69,7 +69,7 @@ export async function getFriendList() {
   }
 
   // sort em by date.
-  chats.sort((a, b) => b.last_timestamp.getTime() - a.last_timestamp.getTime())
+  chats.sort((a, b) => b.last_timestamp.getTime() - a.last_timestamp.getTime());
 
   return chats;
 }
@@ -135,28 +135,15 @@ export async function otherParticipants(conversation_id: string) {
     return [];
   }
 
-  // get participants
-  const participants = await sql<{ user_id: string }[]>`
-    SELECT user_id FROM participants WHERE conversation_id = ${conversation_id}
+  const rows = await sql<{ name: string }[]>`
+    SELECT u.name
+    FROM participants p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.conversation_id = ${conversation_id}
+      AND p.user_id != ${session.user.id}
   `;
-  if (!participants[0]) return [];
 
-  // squash into array
-  let participantNames: string[] = [];
-
-  for (const participant of participants) {
-    const rows = await sql<{ name: string }[]>`
-      SELECT name FROM users WHERE id = ${participant.user_id}
-    `;
-    if (rows[0]) participantNames.push(rows[0].name);
-  }
-
-  // remove themselves
-  participantNames = participantNames.filter(term => term !== session?.user.name)
-
-  // console.log(participantNames);
-
-  return participantNames
+  return rows.map((row) => row.name);
 }
 
 export async function sendMessage(conversation_id: string, content: string) {
@@ -217,40 +204,40 @@ export async function getConversationMessages(conversation_id: string) {
     return [];
   }
 
-  // verify user is participant in conversation.
-  const checkLegit = await sql<{user_id: string}[]>`
-                                SELECT user_id
-                                FROM participants
-                                WHERE
-                                  user_id = ${session.user.id}
-                                  AND conversation_id = ${conversation_id}`;
-  if (!checkLegit[0]) return [];
+  const rows = await sql<{
+    id: string;
+    content: string;
+    sender_id: string;
+    created_at: Date;
+    sender_name: string | null;
+  }[]>`
+    SELECT
+      m.id,
+      m.content,
+      m.sender_id,
+      m.created_at,
+      u.name AS sender_name
+    FROM messages m
+    LEFT JOIN users u ON m.sender_id = u.id
+    WHERE m.conversation_id = ${conversation_id}
+      AND EXISTS (
+        SELECT 1
+        FROM participants
+        WHERE conversation_id = ${conversation_id}
+          AND user_id = ${session.user.id}
+      )
+    ORDER BY m.created_at DESC
+    LIMIT 100
+  `;
 
-  // get messages in conversation.
-
-  const messages = (await sql<{ content: string; created_at: Date; sender_id: string; id: string }[]>`SELECT content, created_at, sender_id, id
-                      FROM messages
-                      WHERE conversation_id = ${conversation_id}
-                      ORDER BY created_at DESC
-                      LIMIT 100
-                      `);
-
-  const chatMessages: chatMessageProps[] = [];
-
-  for (const text of messages) {
-    const name = await getUsernameFromID(text.sender_id);
-
-    chatMessages.push({
-      timestamp: text.created_at,
-      message: text.content,
-      messageid: text.id,
-      senderId: text.sender_id,
-      viewerId: session.user.id,
-      sender: name,
-  });
-  }
-
-  return chatMessages;
+  return rows.map((row) => ({
+    messageid: row.id,
+    message: row.content,
+    senderId: row.sender_id,
+    viewerId: session.user.id,
+    sender: row.sender_name ?? "",
+    timestamp: row.created_at,
+  }));
 }
 
 export async function updateLastReadParticipant(conversation_id: string) {

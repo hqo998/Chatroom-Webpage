@@ -14,8 +14,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Editor directories and files
+.agents/
 .vscode/*
 !.vscode/extensions.json
+graphify-out/
 .idea
 .DS_Store
 *.suo
